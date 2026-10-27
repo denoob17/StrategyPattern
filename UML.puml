@@ -1,0 +1,40 @@
+@startuml
+skinparam classAttributeIconSize 0
+left to right direction
+
+interface Strategy {
+    + execute(a: int, b: int): int
+}
+
+class AddStrategy {
+    + execute(a: int, b: int): int
+}
+
+class SubtractStrategy {
+    + execute(a: int, b: int): int
+}
+
+class MultiplyStrategy {
+    + execute(a: int, b: int): int
+}
+
+class Calculator <<Context>> {
+    - strategy: Strategy
+    + Calculator(strategy: Strategy)
+    + setStrategy(strategy: Strategy): void
+    + calculate(a: int, b: int): int
+}
+
+class Main <<Client>> {
+    + {static} main(args: String[]): void
+}
+
+Strategy <|.. AddStrategy
+Strategy <|.. SubtractStrategy
+Strategy <|.. MultiplyStrategy
+Calculator o--> Strategy : strategy
+Main ..> Calculator : uses
+Main ..> AddStrategy : selects
+Main ..> SubtractStrategy : selects
+Main ..> MultiplyStrategy : selects
+@enduml
